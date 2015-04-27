@@ -1,11 +1,15 @@
 require 'spec_helper'
 
 describe DatesFromString do
-  it 'has a version number' do
-    expect(DatesFromString::VERSION).not_to be nil
-  end
+  subject { DatesFromString.new }
 
-  it 'does something useful' do
-    expect(false).to eq(true)
+  # it 'has a version number' do
+  #   expect(DatesFromString::VERSION).not_to be nil
+  # end
+
+  it 'get date structure from string' do
+    input = 'he was born in 1988'
+    output = [[:year,'1988',nil,nil]]
+    expect(subject.get_structure(input)).to eq(output)
   end
 end

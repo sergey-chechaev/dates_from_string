@@ -1,5 +1,16 @@
 require "dates_from_string/version"
 
-module DatesFromString
-  # Your code goes here...
+class DatesFromString
+
+  def initialize
+
+  end
+
+  def find_date(sructure)
+
+  end
+
+  def get_structure(string)
+
+  end
 end
