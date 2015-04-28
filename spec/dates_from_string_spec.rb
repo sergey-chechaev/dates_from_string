@@ -211,5 +211,14 @@ describe DatesFromString do
       expect(subject.get_structure(input)).to eq(output)
     end
 
+    it 'month by string and year' do
+      input = 'August 1961'
+      output = [
+        {:type=>:month, :value=>"08", :distance=>1, :key_words=>[]},
+        {:type=>:year, :value=>"1961", :distance=>0, :key_words=>[]},
+      ]
+
+      expect(subject.get_structure(input)).to eq(output)
+    end
   end
 end

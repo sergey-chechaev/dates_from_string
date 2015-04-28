@@ -20,6 +20,7 @@ class DatesFromString
       value_year = get_year(data)
       value_full_date = get_full_date(data)
       value_dash = get_dash_data(data)
+      value_month = get_month_by_list(data)
       next_index = index + 1
 
       if value_year
@@ -35,6 +36,10 @@ class DatesFromString
       if value_dash
         add_to_structure(:year ,value_dash[0], index, next_index, data_arr, '-')
         add_to_structure(:year ,value_dash[1], index, next_index, data_arr)
+      end
+
+      if value_month
+        add_to_structure(:month ,value_month, index, next_index, data_arr)
       end
     end
 
@@ -70,6 +75,16 @@ class DatesFromString
   def get_dash_data(string)
     if string =~ (/\d{4}-\d{4}/)
       string.split("-")
+    else
+      nil
+    end
+  end
+
+  def get_month_by_list(string)
+    month = ['January','February','March','April','May','June','July','August','September','October','November','December']
+    index = month.index(string)
+    if index
+      sprintf('%02d',(index+1))
     else
       nil
     end
