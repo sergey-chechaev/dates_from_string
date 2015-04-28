@@ -72,6 +72,13 @@ dates_from_string.get_structure(input)
 #  {:type=>:year, :value=>"2013", :distance=>4, :key_words=>[]},
 #  {:type=>:year, :value=>"2015", :distance=>9, :key_words=>[]},
 #  {:type=>:year, :value=>"2016", :distance=>0, :key_words=>[]}]
+
+input = 'August 1961'
+dates_from_string.get_structure(input)
+
+#=> return
+#  [{:type=>:month, :value=>"08", :distance=>1, :key_words=>[]},
+#  {:type=>:year, :value=>"1961", :distance=>0, :key_words=>[]}]
 ```
 
 ## Development
