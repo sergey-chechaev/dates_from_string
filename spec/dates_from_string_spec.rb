@@ -220,5 +220,22 @@ describe DatesFromString do
 
       expect(subject.get_structure(input)).to eq(output)
     end
+
+    it 'month by string and year and one more' do
+      input = 'August 1961'
+      output = [
+        {:type=>:month, :value=>"08", :distance=>1, :key_words=>[]},
+        {:type=>:year, :value=>"1961", :distance=>0, :key_words=>[]},
+      ]
+
+      expect(subject.get_structure(input)).to eq(output)
+
+      input_2 = '2012'
+      output_2 = [
+        {:type=>:year, :value=>"2012", :distance=>0, :key_words=>[]},
+      ]
+
+      expect(subject.get_structure(input_2)).to eq(output_2)
+    end
   end
 end

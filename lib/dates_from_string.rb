@@ -4,7 +4,6 @@ require "pry-rails"
 class DatesFromString
 
   def initialize(key_words = [])
-    @main_arr =[]
     @key_words = key_words
   end
 
@@ -13,6 +12,7 @@ class DatesFromString
   end
 
   def get_structure(string)
+    @main_arr = []
     data_arr = string.split(" ")
     @indexs = []
 
