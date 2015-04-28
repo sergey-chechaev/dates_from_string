@@ -1,8 +1,7 @@
 # DatesFromString
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/dates_from_string`. To experiment with that code, run `bin/console` for an interactive prompt.
+Flexible solution for finding all formats of dates in text. After parsing text gem return flexible structure of dates, also you can get array of dates.
 
-TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
@@ -22,7 +21,21 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+
+```ruby
+text = "1988-1990 and 2000 and one more date 28.04.2015"    # parsing text
+key_words = ['between','-']                                 # you can define special separator
+dates_from_string = DatesFromString.new('-')                # define DatesFromString object
+dates_from_string.get_structure(text)                       # parsing text
+
+#=> returns
+#  [{:type=>:year, :value=>"1988", :distance=>0, :key_words=>["-"]},
+#  {:type=>:year, :value=>"1990", :distance=>2, :key_words=>[]},
+#  {:type=>:year, :value=>"2000", :distance=>5, :key_words=>[]},
+#  {:type=>:year, :value=>"2015", :distance=>0, :key_words=>[]},
+#  {:type=>:month, :value=>"04", :distance=>0, :key_words=>[]},
+#  {:type=>:day, :value=>"28", :distance=>0, :key_words=>[]}]
+```
 
 ## Development
 

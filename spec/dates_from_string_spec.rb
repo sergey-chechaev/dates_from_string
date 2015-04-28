@@ -237,5 +237,15 @@ describe DatesFromString do
 
       expect(subject.get_structure(input_2)).to eq(output_2)
     end
+
+    it 'two year and between' do
+      input = 'Between 1984 and 1986'
+      output = [
+        {:type=>:year, :value=>"1984", :distance=>3, :key_words=>[]},
+        {:type=>:year, :value=>"1986", :distance=>0, :key_words=>[]},
+      ]
+
+      expect(subject.get_structure(input)).to eq(output)
+    end
   end
 end
