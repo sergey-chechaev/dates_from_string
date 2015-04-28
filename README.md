@@ -35,6 +35,11 @@ dates_from_string.get_structure(text)                       # parsing text
 #  {:type=>:year, :value=>"2015", :distance=>0, :key_words=>[]},
 #  {:type=>:month, :value=>"04", :distance=>0, :key_words=>[]},
 #  {:type=>:day, :value=>"28", :distance=>0, :key_words=>[]}]
+
+:type       # type of date year, month or day
+:value      # value of date
+:distance   # distance for next date type
+:key_words  # special words, symbols that separate dates 
 ```
 
 ## Development
