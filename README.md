@@ -25,7 +25,7 @@ Or install it yourself as:
 ```ruby
 text = "1988-1990 and 2000 and one more date 28.04.2015"    # parsing text
 key_words = ['between','-']                                 # you can define special separator
-dates_from_string = DatesFromString.new('-')                # define DatesFromString object
+dates_from_string = DatesFromString.new(key_words)          # define DatesFromString object
 dates_from_string.get_structure(text)                       # parsing text
 
 #=> returns
@@ -40,6 +40,38 @@ dates_from_string.get_structure(text)                       # parsing text
 :value      # value of date
 :distance   # distance for next date type
 :key_words  # special words, symbols that separate dates 
+```
+
+One more examples:
+
+```ruby
+input = '1988 between 1990'
+key_words = ['between']
+dates_from_string = DatesFromString.new(key_words)
+dates_from_string.get_structure(input)
+
+#=> return
+#  [{:type=>:year, :value=>"1988", :distance=>2, :key_words=>["between"]},
+#  {:type=>:year, :value=>"1990", :distance=>0, :key_words=>[]}]
+
+input = '2013/07/09 one date and he born in 1990'
+dates_from_string.get_structure(input)
+
+#=> return
+#  [{:type=>:year, :value=>"2013", :distance=>0, :key_words=>[]},
+#  {:type=>:month, :value=>"07", :distance=>0, :key_words=>[]},
+#  {:type=>:day, :value=>"09", :distance=>7, :key_words=>[]},
+#  {:type=>:year, :value=>"1990", :distance=>0, :key_words=>[]}]
+
+input = '1990 1988 year 2013 bla bla bla 2015 a b c d i f g qwe 2016'
+dates_from_string.get_structure(input)
+
+#=> return
+#  [{:type=>:year, :value=>"1990", :distance=>1, :key_words=>[]},
+#  {:type=>:year, :value=>"1988", :distance=>2, :key_words=>[]},
+#  {:type=>:year, :value=>"2013", :distance=>4, :key_words=>[]},
+#  {:type=>:year, :value=>"2015", :distance=>9, :key_words=>[]},
+#  {:type=>:year, :value=>"2016", :distance=>0, :key_words=>[]}]
 ```
 
 ## Development
