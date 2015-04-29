@@ -251,9 +251,21 @@ describe DatesFromString do
     it 'day month ny string and year' do
       input = '10 Dec 1948'
       output = [
-        {:type=>:year, :value=>"1984", :distance=>0, :key_words=>[]},
-        {:type=>:month, :value=>"12", :distance=>0, :key_words=>[]},
-        {:type=>:day, :value=>"10", :distance=>0, :key_words=>[]},
+        {:type=>:day, :value=>"10", :distance=>1, :key_words=>[]},
+        {:type=>:month, :value=>"12", :distance=>1, :key_words=>[]},
+        {:type=>:year, :value=>"1948", :distance=>0, :key_words=>[]}
+      ]
+
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'day month ny string and year' do
+      input = '10 Dec 1948 ane one more year 1988'
+      output = [
+        {:type=>:day, :value=>"10", :distance=>1, :key_words=>[]},
+        {:type=>:month, :value=>"12", :distance=>1, :key_words=>[]},
+        {:type=>:year, :value=>"1948", :distance=>5, :key_words=>[]},
+        {:type=>:year, :value=>"1988", :distance=>0, :key_words=>[]}
       ]
 
       expect(subject.get_structure(input)).to eq(output)

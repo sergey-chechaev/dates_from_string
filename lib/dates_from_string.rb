@@ -21,6 +21,9 @@ class DatesFromString
       value_full_date = get_full_date(data)
       value_dash = get_dash_data(data)
       value_month = get_month_by_list(data)
+      value_short_month = get_short_month(data)
+
+      value_day = get_day(data)
       next_index = index + 1
 
       if value_year
@@ -40,6 +43,14 @@ class DatesFromString
 
       if value_month
         add_to_structure(:month ,value_month, index, next_index, data_arr)
+      end
+
+      if value_short_month
+        add_to_structure(:month ,value_short_month, index, next_index, data_arr)
+      end
+
+      if value_day
+        add_to_structure(:day ,value_day, index, next_index, data_arr)
       end
     end
 
@@ -74,6 +85,15 @@ class DatesFromString
     end
   end
 
+  def get_day(string)
+    if string =~ (/^\d{2}$/)
+      string
+    else
+      nil
+    end
+  end
+
+
   def get_dash_data(string)
     if string =~ (/\d{4}-\d{4}/)
       string.split("-")
@@ -85,8 +105,21 @@ class DatesFromString
   def get_month_by_list(string)
     month = ['January','February','March','April','May','June','July','August','September','October','November','December']
     index = month.index(string)
+
     if index
       sprintf('%02d',(index+1))
+    else
+      nil
+    end
+
+  end
+
+  def get_short_month(string)
+    short_month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Apr','Sep','Oct','Nov','Dec']
+    short_index = short_month.index(string)
+
+    if short_index
+      sprintf('%02d',(short_index+1))
     else
       nil
     end
