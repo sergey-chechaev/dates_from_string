@@ -79,6 +79,15 @@ dates_from_string.get_structure(input)
 #=> return
 #  [{:type=>:month, :value=>"08", :distance=>1, :key_words=>[]},
 #  {:type=>:year, :value=>"1961", :distance=>0, :key_words=>[]}]
+
+input = '10 April 1948'
+dates_from_string.get_structure(input)
+
+#=> return
+# [{:type=>:day, :value=>"10", :distance=>1, :key_words=>[]},
+# {:type=>:month, :value=>"04", :distance=>1, :key_words=>[]},
+# {:type=>:year, :value=>"1948", :distance=>0, :key_words=>[]}]
+#
 ```
 
 ## Development
