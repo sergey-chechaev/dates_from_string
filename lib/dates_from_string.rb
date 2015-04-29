@@ -55,6 +55,7 @@ class DatesFromString
   end
 
   def get_full_date(string)
+    binding.pry
     if string =~ (/\d{4}-\d{2}-\d{2}/)
       string.split("-")
     elsif string =~ (/\d{2}-\d{2}-\d{4}/)
@@ -67,6 +68,9 @@ class DatesFromString
       string.split("/")
     elsif string =~ (/\d{2}\/\d{2}\/\d{4}/)
       string.split("/").reverse
+    elsif string =~(/\d{2}\s{1}(Jan|Feb|Mar|Apr|May|Jun|Jul|Apr|Sep|Oct|Nov|Dec)\s{1}\d{4}/)
+      binding.pry
+      string.to_date.to_s.split("-")
     else
       nil
     end
