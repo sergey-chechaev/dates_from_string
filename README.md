@@ -39,10 +39,10 @@ dates_from_string.get_structure(text)                       # parsing text
 :type       # type of date year, month or day
 :value      # value of date
 :distance   # distance for next date type
-:key_words  # special words, symbols that separate dates 
+:key_words  # special words, symbols that separate dates
 ```
 
-One more examples:
+Examples:
 
 ```ruby
 input = '1988 between 1990'
