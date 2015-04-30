@@ -93,10 +93,19 @@ input = 'circa 1960 and full date 07 Jun 1941'
 dates_from_string.get_structure(input)
 
 #=> return
-#[{:type=>:year, :value=>"1960", :distance=>5, :key_words=>[]},
-#{:type=>:day, :value=>"07", :distance=>1, :key_words=>[]},
-#{:type=>:month, :value=>"06", :distance=>1, :key_words=>[]},
-#{:type=>:year, :value=>"1941", :distance=>0, :key_words=>[]}]
+# [{:type=>:year, :value=>"1960", :distance=>5, :key_words=>[]},
+# {:type=>:day, :value=>"07", :distance=>1, :key_words=>[]},
+# {:type=>:month, :value=>"06", :distance=>1, :key_words=>[]},
+# {:type=>:year, :value=>"1941", :distance=>0, :key_words=>[]}]
+
+obj = DatesFromString.new(['and'])
+input = 'between 1960 and 1965'
+obj.get_structure(input)
+
+#=> return
+# [{:type=>:year, :value=>"1960", :distance=>3, :key_words=>['and']},
+# {:type=>:year, :value=>"1965", :distance=>0, :key_words=>[]},]
+
 ```
 
 ## Development

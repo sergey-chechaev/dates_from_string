@@ -304,5 +304,17 @@ describe DatesFromString do
 
       expect(subject.get_structure(input)).to eq(output)
     end
+
+    it 'grap date between tho dates and add key words' do
+      obj = DatesFromString.new(['and'])
+      input = 'between 1960 and 1965'
+      output = [
+        {:type=>:year, :value=>"1960", :distance=>3, :key_words=>['and']},
+        {:type=>:year, :value=>"1965", :distance=>0, :key_words=>[]},
+      ]
+
+      expect(obj.get_structure(input)).to eq(output)
+    end
+
   end
 end
