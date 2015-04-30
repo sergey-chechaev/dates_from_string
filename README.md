@@ -1,6 +1,6 @@
 # DatesFromString
 
-Flexible solution for finding dates in text. After parsing text gem return flexible structure of dates, also you can get array of dates.
+Flexible solution for finding dates in text. After parsing text, gem return flexible structure of dates, that allow get date by you own logic use distance for next date type and key words between dates.
 
 
 ## Installation
