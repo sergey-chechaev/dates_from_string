@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["kompotdrinker@gmail.com"]
 
   spec.summary       = %q{Flexible solution for finding all formats of dates in text}
-  spec.description   = %q{Find dates in string and return array of dates}
+  spec.description   = %q{Flexible solution for finding all formats of dates in text}
   spec.homepage      = ""
   spec.license       = "MIT"
 
