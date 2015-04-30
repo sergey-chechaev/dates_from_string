@@ -106,6 +106,20 @@ obj.get_structure(input)
 # [{:type=>:year, :value=>"1960", :distance=>2, :key_words=>['and']},
 # {:type=>:year, :value=>"1965", :distance=>0, :key_words=>[]},]
 
+input = "In September 2011, following a change in the law extending 
+         the presidential term from four years to six,[5] Putin announced 
+         that he would seek a third, non-consecutive term as President in 
+         the 2012 presidential election, an announcement which led to 
+         large-scale protests in many Russian cities. In March 2012 he won the election, 
+         which was criticized for procedural irregularities, and is serving a six-year term"
+dates_from_string.get_structure(input)
+
+#=> return
+# [{:type=>:month, :value=>"09", :distance=>1, :key_words=>[]},
+# {:type=>:year, :value=>"2011", :distance=>30, :key_words=>[]},
+# {:type=>:year, :value=>"2012", :distance=>15, :key_words=>[]},
+# {:type=>:month, :value=>"03", :distance=>1, :key_words=>[]},
+# {:type=>:year, :value=>"2012", :distance=>0, :key_words=>[]}]
 ```
 
 ## Development
