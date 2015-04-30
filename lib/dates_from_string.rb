@@ -61,6 +61,8 @@ class DatesFromString
   def get_year(string)
     if string =~ /^\d{4}$/
       string
+    elsif string =~ /^\d{4}.$/
+      string.delete!('.')
     else
       nil
     end

@@ -316,5 +316,23 @@ describe DatesFromString do
       expect(obj.get_structure(input)).to eq(output)
     end
 
+    it 'grap data from long text' do
+      input = "For 16 years Putin was an officer in the KGB, 
+               rising to the rank of Lieutenant Colonel before 
+               he retired to enter politics in his native Saint 
+               Petersburg in 1991. He moved to Moscow in 1996 and 
+               joined President Boris Yeltsin's administration where 
+               he rose quickly, becoming Acting President on 31 December 
+               1999 when Yeltsin unexpectedly resigned"
+      output = [
+        {:type=>:day, :value=>"16", :distance=>28, :key_words=>[]},
+        {:type=>:year, :value=>"1991", :distance=>6, :key_words=>[]},
+        {:type=>:year, :value=>"1996", :distance=>15, :key_words=>[]},
+        {:type=>:day, :value=>"31", :distance=>1, :key_words=>[]},
+        {:type=>:month, :value=>"12", :distance=>1, :key_words=>[]},
+        {:type=>:year, :value=>"1999", :distance=>0, :key_words=>[]},
+      ]
+      expect(subject.get_structure(input)).to eq(output)
+    end
   end
 end
