@@ -15,6 +15,7 @@ class DatesFromString
     @main_arr = []
     data_arr = string.split(" ")
     @indexs = []
+    @first_index = []
 
     data_arr.each_with_index do |data, index|
       value_year = get_year(data)
@@ -128,6 +129,7 @@ class DatesFromString
   def add_to_structure (type ,value, index, next_index, data_arr, key_word = nil)
     set_structura
     if value
+      @first_index << index
       @structura[:type] = type
       @structura[:value] = value
     end
@@ -155,6 +157,8 @@ class DatesFromString
     @indexs << index
     if @indexs.count > 1
       result = (index - @indexs[-2])
+    elsif @first_index[0] < index
+      result = (index - @first_index[0])
     else
       result = index
     end
