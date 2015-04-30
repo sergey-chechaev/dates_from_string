@@ -334,5 +334,39 @@ describe DatesFromString do
       ]
       expect(subject.get_structure(input)).to eq(output)
     end
+
+    it 'grap data from long text two' do
+      input = "In September 2011, following a change in the law extending 
+               the presidential term from four years to six,[5] Putin announced 
+               that he would seek a third, non-consecutive term as President in 
+               the 2012 presidential election, an announcement which led to 
+               large-scale protests in many Russian cities. In March 2012 he won the election, 
+               which was criticized for procedural irregularities, and is serving a six-year term"
+      output = [
+        {:type=>:month, :value=>"09", :distance=>1, :key_words=>[]},
+        {:type=>:year, :value=>"2011", :distance=>30, :key_words=>[]},
+        {:type=>:year, :value=>"2012", :distance=>15, :key_words=>[]},
+        {:type=>:month, :value=>"03", :distance=>1, :key_words=>[]},
+        {:type=>:year, :value=>"2012", :distance=>0, :key_words=>[]},
+      ]
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'grap data from long text three' do
+      input = "During Putin  first premiership and presidency (1999–2008) 
+               real incomes in Russia rose by a factor of 2.5, while real 
+               wages more than tripled; unemployment and poverty more than halved. 
+               Russians' self-assessed life satisfaction also rose significantly.
+               Putin's first presidency was marked by high economic growth: the 
+               Russian economy grew for eight straight years, seeing GDP increase by 
+               72% in PPP (as for nominal GDP, 600%).This growth was a combined result 
+               of the 2000s commodities boom, high oil prices, as well as prudent economic 
+               and fiscal policies."
+      output = [
+        {:type=>:year, :value=>"1999", :distance=>6, :key_words=>['-']},
+        {:type=>:year, :value=>"2008", :distance=>0, :key_words=>[]},
+      ]
+      expect(subject.get_structure(input)).to eq(output)
+    end
   end
 end

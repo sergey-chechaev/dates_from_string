@@ -61,8 +61,10 @@ class DatesFromString
   def get_year(string)
     if string =~ /^\d{4}$/
       string
-    elsif string =~ /^\d{4}.$/
+    elsif string =~ /^\d{4}\.$/
       string.delete!('.')
+    elsif string =~ /^\d{4}\,$/
+      string.delete!(',')
     else
       nil
     end
@@ -98,8 +100,10 @@ class DatesFromString
 
 
   def get_dash_data(string)
-    if string =~ (/\d{4}-\d{4}/)
-      string.split("-")
+    if (result = string.match(/\d{4}-\d{4}/))
+      result.to_s.split("-")
+    elsif (result = string.match(/\d{4}–\d{4}/))
+      result.to_s.split("–")
     else
       nil
     end
