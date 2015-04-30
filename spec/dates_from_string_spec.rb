@@ -281,5 +281,28 @@ describe DatesFromString do
 
       expect(subject.get_structure(input)).to eq(output)
     end
+
+    it 'grap date from not valid string one' do
+      input = '[CDATA[11.07.1989]]'
+      output = [
+        {:type=>:year, :value=>"1989", :distance=>0, :key_words=>[]},
+        {:type=>:month, :value=>"07", :distance=>0, :key_words=>[]},
+        {:type=>:day, :value=>"11", :distance=>0, :key_words=>[]},
+      ]
+
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'grap date circa year and full data' do
+      input = 'circa 1960 and full date 07 Jun 1941'
+      output = [
+        {:type=>:year, :value=>"1960", :distance=>5, :key_words=>[]},
+        {:type=>:day, :value=>"07", :distance=>1, :key_words=>[]},
+        {:type=>:month, :value=>"06", :distance=>1, :key_words=>[]},
+        {:type=>:year, :value=>"1941", :distance=>0, :key_words=>[]},
+      ]
+
+      expect(subject.get_structure(input)).to eq(output)
+    end
   end
 end

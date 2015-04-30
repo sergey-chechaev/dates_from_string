@@ -88,6 +88,13 @@ dates_from_string.get_structure(input)
 # {:type=>:month, :value=>"04", :distance=>1, :key_words=>[]},
 # {:type=>:year, :value=>"1948", :distance=>0, :key_words=>[]}]
 #
+
+input = 'circa 1960 and full date 07 Jun 1941'
+#=> return
+#[{:type=>:year, :value=>"1960", :distance=>5, :key_words=>[]},
+#{:type=>:day, :value=>"07", :distance=>1, :key_words=>[]},
+#{:type=>:month, :value=>"06", :distance=>1, :key_words=>[]},
+#{:type=>:year, :value=>"1941", :distance=>0, :key_words=>[]}]
 ```
 
 ## Development

@@ -66,18 +66,18 @@ class DatesFromString
   end
 
   def get_full_date(string)
-    if string =~ (/\d{4}-\d{2}-\d{2}/)
-      string.split("-")
-    elsif string =~ (/\d{2}-\d{2}-\d{4}/)
-      string.split("-").reverse
-    elsif string =~ (/\d{4}\.\d{2}\.\d{2}/)
-      string.split(".")
-    elsif string =~ (/\d{2}\.\d{2}\.\d{4}/)
-      string.split(".").reverse
-    elsif string =~ (/\d{4}\/\d{2}\/\d{2}/)
-      string.split("/")
-    elsif string =~ (/\d{2}\/\d{2}\/\d{4}/)
-      string.split("/").reverse
+    if (result = string.match(/\d{4}-\d{2}-\d{2}/))
+      result.to_s.split("-")
+    elsif (result = string.match(/\d{2}-\d{2}-\d{4}/))
+      result.to_s.split("-").reverse
+    elsif (result = string.match(/\d{4}\.\d{2}\.\d{2}/))
+      result.to_s.split(".")
+    elsif (result = string.match(/\d{2}\.\d{2}\.\d{4}/))
+      result.to_s.split(".").reverse
+    elsif (result = string.match(/\d{4}\/\d{2}\/\d{2}/))
+      result.to_s.split("/")
+    elsif (result = string.match(/\d{2}\/\d{2}\/\d{4}/))
+      result.to_s.split("/").reverse
     # elsif string =~(/\d{2}\s{1}(Jan|Feb|Mar|Apr|May|Jun|Jul|Apr|Sep|Oct|Nov|Dec)\s{1}\d{4}/)
     #   string.to_date.to_s.split("-")
     else
