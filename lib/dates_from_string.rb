@@ -12,50 +12,60 @@ class DatesFromString
   end
 
   def get_structure(string)
-    @main_arr = []
-    data_arr = string.split(" ")
-    @indexs = []
-    @first_index = []
+    unless string.nil? || string.empty?
+      @main_arr = []
+      data_arr = string.split(" ")
+      @indexs = []
+      @first_index = []
 
-    data_arr.each_with_index do |data, index|
-      value_year = get_year(data)
-      value_full_date = get_full_date(data)
-      value_dash = get_dash_data(data)
-      value_month = get_month_by_list(data)
-      value_short_month = get_short_month(data)
+      data_arr.each_with_index do |data, index|
+        value_year = get_year(data)
+        value_full_date = get_full_date(data)
+        value_month_year_date = get_month_year_date(data)
+        value_dash = get_dash_data(data)
+        value_month = get_month_by_list(data)
+        value_short_month = get_short_month(data)
 
-      value_day = get_day(data)
-      next_index = index + 1
+        value_day = get_day(data)
+        next_index = index + 1
 
-      if value_year
-        add_to_structure(:year ,value_year, index, next_index, data_arr)
+        if value_year
+          add_to_structure(:year ,value_year, index, next_index, data_arr)
+        end
+
+        if value_full_date
+          add_to_structure(:year ,value_full_date[0], index, next_index, data_arr)
+          add_to_structure(:month ,value_full_date[1], index, next_index, data_arr)
+          add_to_structure(:day ,value_full_date[2], index, next_index, data_arr)
+        end
+
+        if value_month_year_date
+          add_to_structure(:year ,value_month_year_date[0], index, next_index, data_arr)
+          add_to_structure(:month ,value_month_year_date[1], index, next_index, data_arr)
+        end
+
+        if value_dash
+          add_to_structure(:year ,value_dash[0], index, next_index, data_arr, '-')
+          add_to_structure(:year ,value_dash[1], index, next_index, data_arr)
+        end
+
+        if value_month
+          add_to_structure(:month ,value_month, index, next_index, data_arr)
+        end
+
+        if value_short_month
+          add_to_structure(:month ,value_short_month, index, next_index, data_arr)
+        end
+
+        if value_day
+          add_to_structure(:day ,value_day, index, next_index, data_arr)
+        end
       end
 
-      if value_full_date
-        add_to_structure(:year ,value_full_date[0], index, next_index, data_arr)
-        add_to_structure(:month ,value_full_date[1], index, next_index, data_arr)
-        add_to_structure(:day ,value_full_date[2], index, next_index, data_arr)
-      end
-
-      if value_dash
-        add_to_structure(:year ,value_dash[0], index, next_index, data_arr, '-')
-        add_to_structure(:year ,value_dash[1], index, next_index, data_arr)
-      end
-
-      if value_month
-        add_to_structure(:month ,value_month, index, next_index, data_arr)
-      end
-
-      if value_short_month
-        add_to_structure(:month ,value_short_month, index, next_index, data_arr)
-      end
-
-      if value_day
-        add_to_structure(:day ,value_day, index, next_index, data_arr)
-      end
+      return @main_arr
+    else
+      nil
     end
-
-    return @main_arr
   end
 
   def get_year(string)
@@ -85,6 +95,16 @@ class DatesFromString
       result.to_s.split("/").reverse
     # elsif string =~(/\d{2}\s{1}(Jan|Feb|Mar|Apr|May|Jun|Jul|Apr|Sep|Oct|Nov|Dec)\s{1}\d{4}/)
     #   string.to_date.to_s.split("-")
+    else
+      nil
+    end
+  end
+
+  def get_month_year_date(string)
+    if (result = string.match(/^\d{2}\.\d{4}$/))
+      result.to_s.split(".").reverse
+    elsif (result = string.match(/^\d{4}\.\d{2}$/))
+      result.to_s.split(".")
     else
       nil
     end

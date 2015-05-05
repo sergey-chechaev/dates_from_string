@@ -317,12 +317,12 @@ describe DatesFromString do
     end
 
     it 'grap data from long text' do
-      input = "For 16 years Putin was an officer in the KGB, 
-               rising to the rank of Lieutenant Colonel before 
-               he retired to enter politics in his native Saint 
-               Petersburg in 1991. He moved to Moscow in 1996 and 
-               joined President Boris Yeltsin's administration where 
-               he rose quickly, becoming Acting President on 31 December 
+      input = "For 16 years Putin was an officer in the KGB,
+               rising to the rank of Lieutenant Colonel before
+               he retired to enter politics in his native Saint
+               Petersburg in 1991. He moved to Moscow in 1996 and
+               joined President Boris Yeltsin's administration where
+               he rose quickly, becoming Acting President on 31 December
                1999 when Yeltsin unexpectedly resigned"
       output = [
         {:type=>:day, :value=>"16", :distance=>28, :key_words=>[]},
@@ -336,11 +336,11 @@ describe DatesFromString do
     end
 
     it 'grap data from long text two' do
-      input = "In September 2011, following a change in the law extending 
-               the presidential term from four years to six,[5] Putin announced 
-               that he would seek a third, non-consecutive term as President in 
-               the 2012 presidential election, an announcement which led to 
-               large-scale protests in many Russian cities. In March 2012 he won the election, 
+      input = "In September 2011, following a change in the law extending
+               the presidential term from four years to six,[5] Putin announced
+               that he would seek a third, non-consecutive term as President in
+               the 2012 presidential election, an announcement which led to
+               large-scale protests in many Russian cities. In March 2012 he won the election,
                which was criticized for procedural irregularities, and is serving a six-year term"
       output = [
         {:type=>:month, :value=>"09", :distance=>1, :key_words=>[]},
@@ -353,19 +353,49 @@ describe DatesFromString do
     end
 
     it 'grap data from long text three' do
-      input = "During Putin  first premiership and presidency (1999–2008) 
-               real incomes in Russia rose by a factor of 2.5, while real 
-               wages more than tripled; unemployment and poverty more than halved. 
+      input = "During Putin  first premiership and presidency (1999–2008)
+               real incomes in Russia rose by a factor of 2.5, while real
+               wages more than tripled; unemployment and poverty more than halved.
                Russians' self-assessed life satisfaction also rose significantly.
-               Putin's first presidency was marked by high economic growth: the 
-               Russian economy grew for eight straight years, seeing GDP increase by 
-               72% in PPP (as for nominal GDP, 600%).This growth was a combined result 
-               of the 2000s commodities boom, high oil prices, as well as prudent economic 
+               Putin's first presidency was marked by high economic growth: the
+               Russian economy grew for eight straight years, seeing GDP increase by
+               72% in PPP (as for nominal GDP, 600%).This growth was a combined result
+               of the 2000s commodities boom, high oil prices, as well as prudent economic
                and fiscal policies."
       output = [
         {:type=>:year, :value=>"1999", :distance=>6, :key_words=>['-']},
         {:type=>:year, :value=>"2008", :distance=>0, :key_words=>[]},
       ]
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'find month.year' do
+      input = "10.1964"
+      output = [
+        {:type=>:year, :value=>"1964", :distance=>0, :key_words=>[]},
+        {:type=>:month, :value=>"10", :distance=>0, :key_words=>[]},
+      ]
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'find year.moth' do
+      input = "1964.10"
+      output = [
+        {:type=>:year, :value=>"1964", :distance=>0, :key_words=>[]},
+        {:type=>:month, :value=>"10", :distance=>0, :key_words=>[]},
+      ]
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'no string' do
+      input = ""
+      output = nil
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'nil' do
+      input = nil
+      output = nil
       expect(subject.get_structure(input)).to eq(output)
     end
   end
