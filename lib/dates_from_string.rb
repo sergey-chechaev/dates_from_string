@@ -1,5 +1,5 @@
 require "dates_from_string/version"
-require "pry-rails"
+
 
 class DatesFromString
 
