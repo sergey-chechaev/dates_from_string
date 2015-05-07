@@ -85,6 +85,18 @@ class DatesFromString
       result.to_s.split("-")
     elsif (result = string.match(/\d{2}-\d{2}-\d{4}/))
       result.to_s.split("-").reverse
+    elsif (result = string.match(/\d{4}-\d{1}-\d{2}/))
+      result.to_s.split("-")
+    elsif (result = string.match(/\d{2}-\d{1}-\d{4}/))
+      result.to_s.split("-").reverse
+    elsif (result = string.match(/\d{4}-\d{1}-\d{1}/))
+      result.to_s.split("-")
+    elsif (result = string.match(/\d{1}-\d{1}-\d{4}/))
+      result.to_s.split("-").reverse
+    elsif (result = string.match(/\d{4}-\d{2}-\d{1}/))
+      result.to_s.split("-")
+    elsif (result = string.match(/\d{1}-\d{2}-\d{4}/))
+      result.to_s.split("-").reverse
     elsif (result = string.match(/\d{4}\.\d{2}\.\d{2}/))
       result.to_s.split(".")
     elsif (result = string.match(/\d{2}\.\d{2}\.\d{4}/))

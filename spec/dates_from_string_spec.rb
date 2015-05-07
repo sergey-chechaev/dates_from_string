@@ -398,5 +398,78 @@ describe DatesFromString do
       output = nil
       expect(subject.get_structure(input)).to eq(output)
     end
+
+    it 'no date' do
+      input = "bla bla no date"
+      output = []
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'no date' do
+      input = "bla bla no date"
+      output = []
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'get crash date' do
+      input = "29-2-1969"
+      output = [
+        {:type=>:year, :value=>"1969", :distance=>0, :key_words=>[]},
+        {:type=>:month, :value=>"2", :distance=>0, :key_words=>[]},
+        {:type=>:day, :value=>"29", :distance=>0, :key_words=>[]},
+      ]
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'get crash date two' do
+      input = "1969-2-29"
+      output = [
+        {:type=>:year, :value=>"1969", :distance=>0, :key_words=>[]},
+        {:type=>:month, :value=>"2", :distance=>0, :key_words=>[]},
+        {:type=>:day, :value=>"29", :distance=>0, :key_words=>[]},
+      ]
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'get crash date two' do
+      input = "1969-2-2"
+      output = [
+        {:type=>:year, :value=>"1969", :distance=>0, :key_words=>[]},
+        {:type=>:month, :value=>"2", :distance=>0, :key_words=>[]},
+        {:type=>:day, :value=>"2", :distance=>0, :key_words=>[]},
+      ]
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'get crash date one more' do
+      input = "2-2-1969"
+      output = [
+        {:type=>:year, :value=>"1969", :distance=>0, :key_words=>[]},
+        {:type=>:month, :value=>"2", :distance=>0, :key_words=>[]},
+        {:type=>:day, :value=>"2", :distance=>0, :key_words=>[]},
+      ]
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'get crash date one more' do
+      input = "2-02-1969"
+      output = [
+        {:type=>:year, :value=>"1969", :distance=>0, :key_words=>[]},
+        {:type=>:month, :value=>"02", :distance=>0, :key_words=>[]},
+        {:type=>:day, :value=>"2", :distance=>0, :key_words=>[]},
+      ]
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'get crash date revert' do
+      input = "1969-02-2"
+      output = [
+        {:type=>:year, :value=>"1969", :distance=>0, :key_words=>[]},
+        {:type=>:month, :value=>"02", :distance=>0, :key_words=>[]},
+        {:type=>:day, :value=>"2", :distance=>0, :key_words=>[]},
+      ]
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
   end
 end
