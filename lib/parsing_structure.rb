@@ -12,21 +12,23 @@ class ParsingStructure
     month = nil
     day = nil
 
-    @structure.each do |item|
-      if item[:type] == :year && item[:distance] == 0
-        year = item[:value]
-      end
+    if @structure
+      @structure.each do |item|
+        if item[:type] == :year && item[:distance] == 0
+          year = item[:value]
+        end
 
-      if item[:type] == :month && item[:distance] == 0
-        month = item[:value]
-      end
+        if item[:type] == :month && item[:distance] == 0
+          month = item[:value]
+        end
 
-      if item[:type] == :day && item[:distance] == 0
-        day = item[:value]
-      end
+        if item[:type] == :day && item[:distance] == 0
+          day = item[:value]
+        end
 
-      if year && month && day
-        array_of_full_data << [year,month,day].join("-")
+        if year && month && day
+          array_of_full_data << [year,month,day].join("-")
+        end
       end
     end
 

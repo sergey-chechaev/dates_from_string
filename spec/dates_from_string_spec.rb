@@ -505,5 +505,12 @@ describe DatesFromString do
 
       expect(subject.find_date(input)).to eq(output)
     end
+
+    it 'find dates in simple structure 5' do
+      input = ""
+      output = []
+
+      expect(subject.find_date(input)).to eq(output)
+    end
   end
 end
