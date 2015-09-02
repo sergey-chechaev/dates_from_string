@@ -35,6 +35,9 @@ class DatesFromString
         end
 
         if value_full_date
+          if @main_arr.size == 0
+            index = 0
+          end
           add_to_structure(:year ,value_full_date[0], index, next_index, data_arr)
           add_to_structure(:month ,value_full_date[1], index, next_index, data_arr)
           add_to_structure(:day ,value_full_date[2], index, next_index, data_arr)
