@@ -1,5 +1,5 @@
 require "dates_from_string/version"
-
+require "parsing_structure"
 
 class DatesFromString
 
@@ -7,8 +7,9 @@ class DatesFromString
     @key_words = key_words
   end
 
-  def find_date(sructure)
-
+  def find_date(string)
+    parsing_structure = ParsingStructure.new(get_structure(string))
+    parsing_structure.start
   end
 
   def get_structure(string)

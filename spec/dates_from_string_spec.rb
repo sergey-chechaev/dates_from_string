@@ -471,5 +471,25 @@ describe DatesFromString do
       expect(subject.get_structure(input)).to eq(output)
     end
 
+    it 'find dates in simple structure' do
+      input = "23.04.2013"
+      output = ["2013-04-23"]
+
+      expect(subject.find_date(input)).to eq(output)
+    end
+
+    it 'find dates in simple structure 2' do
+      input = "2015-04-01"
+      output = ["2015-04-01"]
+
+      expect(subject.find_date(input)).to eq(output)
+    end
+
+    it 'find dates in simple structure 3' do
+      input = "01-04-2015"
+      output = ["2015-04-01"]
+
+      expect(subject.find_date(input)).to eq(output)
+    end
   end
 end
