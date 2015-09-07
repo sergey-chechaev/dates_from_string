@@ -471,6 +471,7 @@ describe DatesFromString do
       expect(subject.get_structure(input)).to eq(output)
     end
 
+
     it 'find full date year month and day and time format one' do
       input = '2015-02-02 in 23:00:10'
       output = [
@@ -481,6 +482,48 @@ describe DatesFromString do
       ]
 
       expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'find dates in simple structure' do
+      input = "23.04.2013"
+      output = ["2013-04-23"]
+
+      expect(subject.find_date(input)).to eq(output)
+    end
+
+    it 'find dates in simple structure 2' do
+      input = "2015-04-01"
+      output = ["2015-04-01"]
+
+      expect(subject.find_date(input)).to eq(output)
+    end
+
+    it 'find dates in simple structure 3' do
+      input = "01-04-2015"
+      output = ["2015-04-01"]
+
+      expect(subject.find_date(input)).to eq(output)
+    end
+
+    it 'find dates in simple structure 4' do
+      input = "bla bla bla 01-04-2015"
+      output = ["2015-04-01"]
+
+      expect(subject.find_date(input)).to eq(output)
+    end
+
+    it 'find dates in simple structure 5' do
+      input = "bla bla bla 01-04-2015 идф идф идф"
+      output = ["2015-04-01"]
+
+      expect(subject.find_date(input)).to eq(output)
+    end
+
+    it 'find dates in simple structure 5' do
+      input = ""
+      output = []
+
+      expect(subject.find_date(input)).to eq(output)
     end
 
   end
