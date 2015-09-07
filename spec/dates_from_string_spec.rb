@@ -477,8 +477,8 @@ describe DatesFromString do
       output = [
         {:type=>:year, :value=>"2015", :distance=>0, :key_words=>[]},
         {:type=>:month, :value=>"02", :distance=>0, :key_words=>[]},
-        {:type=>:day, :value=>"02", :distance=>0, :key_words=>[]},
-        {:type=>:time, :value=>"23:00:10", :distance=>2, :key_words=>[]}
+        {:type=>:day, :value=>"02", :distance=>2, :key_words=>[]},
+        {:type=>:time, :value=>"23:00:10", :distance=>0, :key_words=>[]}
       ]
 
       expect(subject.get_structure(input)).to eq(output)
@@ -522,6 +522,32 @@ describe DatesFromString do
     it 'find dates in simple structure 5' do
       input = ""
       output = []
+
+      expect(subject.find_date(input)).to eq(output)
+    end
+
+    it 'find full date year month and day and time format two' do
+      input = 'забрать машину из ремонта 2015-02-02 23:00:10'
+      output = [
+        {:type=>:year, :value=>"2015", :distance=>0, :key_words=>[]},
+        {:type=>:month, :value=>"02", :distance=>0, :key_words=>[]},
+        {:type=>:day, :value=>"02", :distance=>5, :key_words=>[]},
+        {:type=>:time, :value=>"23:00:10", :distance=>0, :key_words=>[]}
+      ]
+
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'find dates in simple structure 6' do
+      input = "забрать машину из ремонта 2015-02-02 23:00:10"
+      output = ["2015-02-02 23:00:10"]
+
+      expect(subject.find_date(input)).to eq(output)
+    end
+
+    it 'find dates in simple structure 7' do
+      input = "Создай задачу забрать машину из ремонта 2015-02-02 в 23:00:10"
+      output = ["2015-02-02 23:00:10"]
 
       expect(subject.find_date(input)).to eq(output)
     end
