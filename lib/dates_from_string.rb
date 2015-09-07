@@ -25,6 +25,7 @@ class DatesFromString
         value_dash = get_dash_data(data)
         value_month = get_month_by_list(data)
         value_short_month = get_short_month(data)
+        value_time = get_time(data)
 
         value_day = get_day(data)
         next_index = index + 1
@@ -60,9 +61,22 @@ class DatesFromString
         if value_day
           add_to_structure(:day ,value_day, index, next_index, data_arr)
         end
+
+        if value_time
+           add_to_structure(:time ,value_time, index, next_index, data_arr)
+        end
+
       end
 
       return @main_arr
+    else
+      nil
+    end
+  end
+
+  def get_time(string)
+    if (result = string.match(/\d{2}:\d{2}:\d{2}/))
+      result.to_s
     else
       nil
     end

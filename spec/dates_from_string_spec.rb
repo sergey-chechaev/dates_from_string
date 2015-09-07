@@ -471,5 +471,17 @@ describe DatesFromString do
       expect(subject.get_structure(input)).to eq(output)
     end
 
+    it 'find full date year month and day and time format one' do
+      input = '2015-02-02 in 23:00:10'
+      output = [
+        {:type=>:year, :value=>"2015", :distance=>0, :key_words=>[]},
+        {:type=>:month, :value=>"02", :distance=>0, :key_words=>[]},
+        {:type=>:day, :value=>"02", :distance=>0, :key_words=>[]},
+        {:type=>:time, :value=>"23:00:10", :distance=>2, :key_words=>[]}
+      ]
+
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
   end
 end
