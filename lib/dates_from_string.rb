@@ -3,6 +3,34 @@ require "parsing_structure"
 
 class DatesFromString
 
+
+  PATTERNS = {
+    [
+      /\d{4}-\d{2}-\d{2}/,
+      /\d{4}-\d{1}-\d{2}/,
+      /\d{4}-\d{1}-\d{1}/,
+      /\d{4}-\d{2}-\d{1}/,
+    ] => -> string { string.to_s.split("-") },
+    [
+      /\d{2}-\d{2}-\d{4}/,
+      /\d{2}-\d{1}-\d{4}/,
+      /\d{1}-\d{1}-\d{4}/,
+      /\d{1}-\d{2}-\d{4}/,
+    ] => -> string { string.to_s.split("-").reverse },
+    [
+      /\d{4}\.\d{2}\.\d{2}/,
+    ] => -> string { string.to_s.split(".") },
+    [
+      /\d{2}\.\d{2}\.\d{4}/,
+    ] => -> string { string.to_s.split(".").reverse },
+    [
+      /\d{4}\/\d{2}\/\d{2}/,
+    ] => -> string { string.to_s.split("/") },
+    [
+      /\d{2}\/\d{2}\/\d{4}/,
+    ] => -> string { string.to_s.split("/").reverse },
+  }
+
   def initialize(key_words = [])
     @key_words = key_words
   end
@@ -12,12 +40,17 @@ class DatesFromString
     parsing_structure.start
   end
 
+  def get_clear_text
+    @clear_text.strip
+  end
+
   def get_structure(string)
     unless string.nil? || string.empty?
       @main_arr = []
       data_arr = string.split(" ")
       @indexs = []
       @first_index = []
+      @clear_text = string.clone
 
       data_arr.each_with_index do |data, index|
         value_year = get_year(data)
@@ -80,6 +113,10 @@ class DatesFromString
 
   def get_time(string)
     if (result = string.match(/\d{2}:\d{2}:\d{2}/))
+      @clear_text.slice!(result.to_s)
+      result.to_s
+    elsif (result = string.match(/\d{2}:\d{2}/))
+      @clear_text.slice!(result.to_s)
       result.to_s
     else
       nil
@@ -99,35 +136,18 @@ class DatesFromString
   end
 
   def get_full_date(string)
-    if (result = string.match(/\d{4}-\d{2}-\d{2}/))
-      result.to_s.split("-")
-    elsif (result = string.match(/\d{2}-\d{2}-\d{4}/))
-      result.to_s.split("-").reverse
-    elsif (result = string.match(/\d{4}-\d{1}-\d{2}/))
-      result.to_s.split("-")
-    elsif (result = string.match(/\d{2}-\d{1}-\d{4}/))
-      result.to_s.split("-").reverse
-    elsif (result = string.match(/\d{4}-\d{1}-\d{1}/))
-      result.to_s.split("-")
-    elsif (result = string.match(/\d{1}-\d{1}-\d{4}/))
-      result.to_s.split("-").reverse
-    elsif (result = string.match(/\d{4}-\d{2}-\d{1}/))
-      result.to_s.split("-")
-    elsif (result = string.match(/\d{1}-\d{2}-\d{4}/))
-      result.to_s.split("-").reverse
-    elsif (result = string.match(/\d{4}\.\d{2}\.\d{2}/))
-      result.to_s.split(".")
-    elsif (result = string.match(/\d{2}\.\d{2}\.\d{4}/))
-      result.to_s.split(".").reverse
-    elsif (result = string.match(/\d{4}\/\d{2}\/\d{2}/))
-      result.to_s.split("/")
-    elsif (result = string.match(/\d{2}\/\d{2}\/\d{4}/))
-      result.to_s.split("/").reverse
-    # elsif string =~(/\d{2}\s{1}(Jan|Feb|Mar|Apr|May|Jun|Jul|Apr|Sep|Oct|Nov|Dec)\s{1}\d{4}/)
-    #   string.to_date.to_s.split("-")
-    else
-      nil
+
+    PATTERNS.keys.each do |patterns|
+      patterns.each do |pattern|
+        if (result = string.match(pattern))
+          @clear_text.slice!(result.to_s)
+          return  PATTERNS[patterns].call result
+        end
+      end
     end
+
+    return nil
+
   end
 
   def get_month_year_date(string)

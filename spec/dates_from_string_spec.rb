@@ -552,5 +552,26 @@ describe DatesFromString do
       expect(subject.find_date(input)).to eq(output)
     end
 
+    it 'find dates in simple structure 8' do
+      input = "Создай задачу забрать машину из ремонта 2015-02-02 в 23:00"
+      output = ["2015-02-02 23:00"]
+
+      expect(subject.find_date(input)).to eq(output)
+    end
+
+    it 'find dates in simple structure 9' do
+      input = "Создай задачу забрать машину из ремонта 2015-02-02 23:00"
+      output = "Создай задачу забрать машину из ремонта"
+      subject.find_date(input)
+      expect(subject.get_clear_text).to eq(output)
+    end
+
+    it 'find dates in simple structure 10' do
+      input = "Создай задачу забрать машину из ремонта 2015-02-02 23:30:40"
+      output = "Создай задачу забрать машину из ремонта"
+      subject.find_date(input)
+      expect(subject.get_clear_text).to eq(output)
+    end
+
   end
 end
