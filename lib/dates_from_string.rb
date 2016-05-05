@@ -31,8 +31,14 @@ class DatesFromString
     ] => -> string { string.to_s.split("/").reverse },
   }
 
-  def initialize(key_words = [])
+  DATE_COUNTRY_FORMAT = {
+    default: -> {[:year,:month,:day]},
+    usa: -> {[:year,:day,:month]}
+  }
+
+  def initialize(key_words = [], date_format: :default)
     @key_words = key_words
+    @date_format = date_format_by_country(date_format)
   end
 
   def find_date(string)
@@ -42,6 +48,10 @@ class DatesFromString
 
   def get_clear_text
     @clear_text.strip
+  end
+
+  def date_format_by_country(date_format)
+    DATE_COUNTRY_FORMAT[date_format.to_sym].call
   end
 
   def get_structure(string)
@@ -72,13 +82,13 @@ class DatesFromString
           if @main_arr.size == 0
             index = 0
           end
-          add_to_structure(:year ,value_full_date[0], index, next_index, data_arr)
-          add_to_structure(:month ,value_full_date[1], index, next_index, data_arr)
-          add_to_structure(:day ,value_full_date[2], index, next_index, data_arr)
+          add_to_structure(@date_format[0], value_full_date[0], index, next_index, data_arr)
+          add_to_structure(@date_format[1], value_full_date[1], index, next_index, data_arr)
+          add_to_structure(@date_format[2], value_full_date[2], index, next_index, data_arr)
         end
 
         if value_month_year_date
-          add_to_structure(:year ,value_month_year_date[0], index, next_index, data_arr)
+          add_to_structure(:year , value_month_year_date[0], index, next_index, data_arr)
           add_to_structure(:month ,value_month_year_date[1], index, next_index, data_arr)
         end
 

@@ -23,24 +23,37 @@ Or install it yourself as:
 
 
 ```ruby
-text = "1988-1990 and 2000 and one more date 28.04.2015"    # parsing text
-key_words = ['between','-']                                 # you can define special separator
-dates_from_string = DatesFromString.new(key_words)          # define DatesFromString object
-dates_from_string.get_structure(text)                       # parsing text
+text = "1988-1990 and 2000 and one more date 04.04.2015"        # parsing text
+key_words = ['between','-']                                     # you can define special separator
+date_format = {date_format: :usa}                               # year,day,month by default year,month,day
+dates_from_string = DatesFromString.new(key_words,date_format)  # define DatesFromString object
+dates_from_string.get_structure(text)                           # parsing text
 
 #=> returns
 #  [{:type=>:year, :value=>"1988", :distance=>0, :key_words=>["-"]},
 #  {:type=>:year, :value=>"1990", :distance=>2, :key_words=>[]},
 #  {:type=>:year, :value=>"2000", :distance=>5, :key_words=>[]},
 #  {:type=>:year, :value=>"2015", :distance=>0, :key_words=>[]},
-#  {:type=>:month, :value=>"04", :distance=>0, :key_words=>[]},
-#  {:type=>:day, :value=>"28", :distance=>0, :key_words=>[]}]
+#  {:type=>:day, :value=>"04", :distance=>0, :key_words=>[]},
+#  {:type=>:month, :value=>"04", :distance=>0, :key_words=>[]}]
 
 :type       # type of date year, month or day
 :value      # value of date
 :distance   # distance for next date type
 :key_words  # special words, symbols that separate dates
+
+# find date in structure
+text = "забрать машину из ремонта 2015-02-02 23:00:10"
+dates_from_string = DatesFromString.new
+dates_from_string.find_date(text)
+
+#=> return
+#  ["2015-02-02 23:00:10"]
 ```
+
+
+
+
 
 Examples:
 
@@ -106,11 +119,11 @@ obj.get_structure(input)
 # [{:type=>:year, :value=>"1960", :distance=>2, :key_words=>['and']},
 # {:type=>:year, :value=>"1965", :distance=>0, :key_words=>[]},]
 
-input = "In September 2011, following a change in the law extending 
-         the presidential term from four years to six,[5] Putin announced 
-         that he would seek a third, non-consecutive term as President in 
-         the 2012 presidential election, an announcement which led to 
-         large-scale protests in many Russian cities. In March 2012 he won the election, 
+input = "In September 2011, following a change in the law extending
+         the presidential term from four years to six,[5] Putin announced
+         that he would seek a third, non-consecutive term as President in
+         the 2012 presidential election, an announcement which led to
+         large-scale protests in many Russian cities. In March 2012 he won the election,
          which was criticized for procedural irregularities, and is serving a six-year term"
 dates_from_string.get_structure(input)
 

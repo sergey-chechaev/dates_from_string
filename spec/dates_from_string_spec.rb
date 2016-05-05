@@ -45,6 +45,18 @@ describe DatesFromString do
       expect(subject.get_structure(input)).to eq(output)
     end
 
+    it 'find full date year month and day format USA' do
+      date_from_string = DatesFromString.new(date_format: :usa)
+      input = '01/23/1988'
+      output = [
+        {:type=>:year, :value=>"1988", :distance=>0, :key_words=>[]},
+        {:type=>:day, :value=>"23", :distance=>0, :key_words=>[]},
+        {:type=>:month, :value=>"01", :distance=>0, :key_words=>[]}
+      ]
+
+      expect(date_from_string.get_structure(input)).to eq(output)
+    end
+
     it 'find full date year month and day format two' do
       input = '2015.02.02'
       output = [
