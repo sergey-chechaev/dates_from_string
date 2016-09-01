@@ -1,3 +1,5 @@
+[![Gem](https://img.shields.io/gem/v/dates_from_string.svg?style=flat-square)](https://rubygems.org/gems/dates_from_string)
+[![Build Status](https://travis-ci.org/sergey-chechaev/dates_from_string.svg?branch=master)](https://travis-ci.org/sergey-chechaev/dates_from_string)
 # DatesFromString
 
 Flexible solution for finding dates in text. After parsing text, gem return flexible structure of dates, that allow get date by you own logic use distance for next date type and key words between dates.
