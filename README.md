@@ -51,6 +51,14 @@ dates_from_string.find_date(text)
 
 #=> return
 #  ["2015-02-02 23:00:10"]
+
+
+# find year in email
+date_from_string = DatesFromString.new()
+input = '1test1988@gmail.com'
+date_from_string.email_date(input)
+#=> return
+#  "1988"
 ```
 
 
