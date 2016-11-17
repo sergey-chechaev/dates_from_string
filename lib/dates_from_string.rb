@@ -50,6 +50,10 @@ class DatesFromString
     @clear_text.strip
   end
 
+  def email_date(email)
+    email.match(/(?:(?:19|20)[0-9]{2})/).to_s
+  end
+
   def date_format_by_country(date_format)
     DATE_COUNTRY_FORMAT[date_format.to_sym].call
   end

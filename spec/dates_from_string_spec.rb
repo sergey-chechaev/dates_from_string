@@ -585,5 +585,29 @@ describe DatesFromString do
       expect(subject.get_clear_text).to eq(output)
     end
 
+    it "find year in email one" do
+      date_from_string = DatesFromString.new()
+      input = 'test1988@gmail.com'
+      output = "1988"
+
+      expect(date_from_string.email_date(input)).to eq(output)
+    end
+
+    it "find year in email two" do
+      date_from_string = DatesFromString.new()
+      input = '1test1988@gmail.com'
+      output = "1988"
+
+      expect(date_from_string.email_date(input)).to eq(output)
+    end
+
+    it "find year in email three" do
+      date_from_string = DatesFromString.new()
+      input = '1test11988@gmail.com'
+      output = "1988"
+
+      expect(date_from_string.email_date(input)).to eq(output)
+    end
+
   end
 end
