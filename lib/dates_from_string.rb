@@ -206,7 +206,7 @@ class DatesFromString
   end
 
   def get_short_month(string)
-    short_month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Apr','Sep','Oct','Nov','Dec']
+    short_month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
     short_index = short_month.index(string)
 
     if short_index
