@@ -497,36 +497,43 @@ describe DatesFromString do
     end
 
     it 'find dates in simple structure' do
-      input = "23.04.2013"
-      output = ["2013-04-23"]
+      input = '23.04.2013'
+      output = ['2013-04-23']
 
       expect(subject.find_date(input)).to eq(output)
     end
 
     it 'find dates in simple structure 2' do
-      input = "2015-04-01"
-      output = ["2015-04-01"]
+      input = '2015-04-01'
+      output = ['2015-04-01']
 
       expect(subject.find_date(input)).to eq(output)
     end
 
     it 'find dates in simple structure 3' do
-      input = "01-04-2015"
-      output = ["2015-04-01"]
+      input = '01-04-2015'
+      output = ['2015-04-01']
 
       expect(subject.find_date(input)).to eq(output)
     end
 
     it 'find dates in simple structure 4' do
-      input = "bla bla bla 01-04-2015"
-      output = ["2015-04-01"]
+      input = 'bla bla bla 01-04-2015'
+      output = ['2015-04-01']
 
       expect(subject.find_date(input)).to eq(output)
     end
 
     it 'find dates in simple structure 5' do
-      input = "bla bla bla 01-04-2015 идф идф идф"
-      output = ["2015-04-01"]
+      input = 'bla bla bla 01-04-2015 идф идф идф'
+      output = ['2015-04-01']
+
+      expect(subject.find_date(input)).to eq(output)
+    end
+
+    it 'find single digit days' do
+      input = '3/13/2017'
+      output = ['2017-13-3']
 
       expect(subject.find_date(input)).to eq(output)
     end

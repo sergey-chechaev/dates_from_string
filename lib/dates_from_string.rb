@@ -19,15 +19,19 @@ class DatesFromString
     ] => -> string { string.to_s.split("-").reverse },
     [
       /\d{4}\.\d{2}\.\d{2}/,
+      /\d{4}\.\d{2}\.\d{1}/,
     ] => -> string { string.to_s.split(".") },
     [
       /\d{2}\.\d{2}\.\d{4}/,
+      /\d{1}\.\d{2}\.\d{4}/,
     ] => -> string { string.to_s.split(".").reverse },
     [
       /\d{4}\/\d{2}\/\d{2}/,
+      /\d{4}\/\d{2}\/\d{1}/,
     ] => -> string { string.to_s.split("/") },
     [
       /\d{2}\/\d{2}\/\d{4}/,
+      /\d{1}\/\d{2}\/\d{4}/,
     ] => -> string { string.to_s.split("/").reverse },
   }
 
@@ -150,18 +154,16 @@ class DatesFromString
   end
 
   def get_full_date(string)
-
     PATTERNS.keys.each do |patterns|
       patterns.each do |pattern|
         if (result = string.match(pattern))
           @clear_text.slice!(result.to_s)
-          return  PATTERNS[patterns].call result
+          return PATTERNS[patterns].call result
         end
       end
     end
 
-    return nil
-
+    nil
   end
 
   def get_month_year_date(string)
