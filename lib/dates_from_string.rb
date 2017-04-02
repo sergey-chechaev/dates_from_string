@@ -1,5 +1,5 @@
 require 'dates_from_string/version'
-require 'parsing_structure'
+require 'dates_from_string/parsing_structure'
 require 'dates_from_string/patterns'
 
 class DatesFromString
