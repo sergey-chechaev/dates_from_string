@@ -1,44 +1,9 @@
-require "dates_from_string/version"
-require "parsing_structure"
+require 'dates_from_string/version'
+require 'parsing_structure'
+require 'dates_from_string/patterns'
 
 class DatesFromString
-
-
-  PATTERNS = {
-    [
-      /\d{4}-\d{2}-\d{2}/,
-      /\d{4}-\d{1}-\d{2}/,
-      /\d{4}-\d{1}-\d{1}/,
-      /\d{4}-\d{2}-\d{1}/,
-    ] => -> string { string.to_s.split("-") },
-    [
-      /\d{2}-\d{2}-\d{4}/,
-      /\d{2}-\d{1}-\d{4}/,
-      /\d{1}-\d{1}-\d{4}/,
-      /\d{1}-\d{2}-\d{4}/,
-    ] => -> string { string.to_s.split("-").reverse },
-    [
-      /\d{4}\.\d{2}\.\d{2}/,
-      /\d{4}\.\d{2}\.\d{1}/,
-    ] => -> string { string.to_s.split(".") },
-    [
-      /\d{2}\.\d{2}\.\d{4}/,
-      /\d{1}\.\d{2}\.\d{4}/,
-    ] => -> string { string.to_s.split(".").reverse },
-    [
-      /\d{4}\/\d{2}\/\d{2}/,
-      /\d{4}\/\d{2}\/\d{1}/,
-    ] => -> string { string.to_s.split("/") },
-    [
-      /\d{2}\/\d{2}\/\d{4}/,
-      /\d{1}\/\d{2}\/\d{4}/,
-    ] => -> string { string.to_s.split("/").reverse },
-  }
-
-  DATE_COUNTRY_FORMAT = {
-    default: -> {[:year,:month,:day]},
-    usa: -> {[:year,:day,:month]}
-  }
+  include Patterns
 
   def initialize(key_words = [], date_format: :default)
     @key_words = key_words
