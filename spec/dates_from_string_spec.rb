@@ -390,7 +390,7 @@ describe DatesFromString do
       expect(subject.get_structure(input)).to eq(output)
     end
 
-    it 'find year.moth' do
+    it 'find year.month' do
       input = "1964.10"
       output = [
         {:type=>:year, :value=>"1964", :distance=>0, :key_words=>[]},
@@ -494,6 +494,62 @@ describe DatesFromString do
       ]
 
       expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'finds full date year month and day in USA comma-delimited format' do
+      input = 'February 2, 2015'
+      output = [
+        {:type=>:month, :value=>"02", :distance=>1, :key_words=>[]},
+        {:type=>:day, :value=>"2", :distance=>1, :key_words=>[]},
+        {:type=>:year, :value=>"2015", :distance=>0, :key_words=>[]}
+      ]
+
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'finds day when sepcified with a single digit' do
+      input = '2 Feb in the year 2015'
+      output = [
+        {:type=>:day, :value=>"2", :distance=>1, :key_words=>[]},
+        {:type=>:month, :value=>"02", :distance=>4, :key_words=>[]},
+        {:type=>:year, :value=>"2015", :distance=>0, :key_words=>[]}
+      ]
+
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'finds date when abbreviated month buttressed by comma' do
+      input = '2 Feb, 2015'
+      output = [
+        {:type=>:day, :value=>"2", :distance=>1, :key_words=>[]},
+        {:type=>:month, :value=>"02", :distance=>1, :key_words=>[]},
+        {:type=>:year, :value=>"2015", :distance=>0, :key_words=>[]}
+      ]
+
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'finds date when month buttressed by comma' do
+      input = '2 February, 2015'
+      output = [
+        {:type=>:day, :value=>"2", :distance=>1, :key_words=>[]},
+        {:type=>:month, :value=>"02", :distance=>1, :key_words=>[]},
+        {:type=>:year, :value=>"2015", :distance=>0, :key_words=>[]}
+      ]
+
+      expect(subject.get_structure(input)).to eq(output)
+    end
+
+    it 'finds day with a specified "nd" ordinal' do
+      dates_from_string_with_ordinals = DatesFromString.new(['between','-'], ordinals: ['nd'])
+      input = '2nd of Feb, 2015'
+      output = [
+        {:type=>:day, :value=>"2", :distance=>2, :key_words=>[]},
+        {:type=>:month, :value=>"02", :distance=>1, :key_words=>[]},
+        {:type=>:year, :value=>"2015", :distance=>0, :key_words=>[]}
+      ]
+
+      expect(dates_from_string_with_ordinals.get_structure(input)).to eq(output)
     end
 
     it 'find dates in simple structure' do
