@@ -552,6 +552,30 @@ describe DatesFromString do
       expect(dates_from_string_with_ordinals.get_structure(input)).to eq(output)
     end
 
+    it 'finds day with a specified "st" ordinal' do
+      dates_from_string_with_ordinals = DatesFromString.new(['between','-'], ordinals: ['st'])
+      input = '1st of Feb, 2015'
+      output = [
+        {:type=>:day, :value=>"1", :distance=>2, :key_words=>[]},
+        {:type=>:month, :value=>"02", :distance=>1, :key_words=>[]},
+        {:type=>:year, :value=>"2015", :distance=>0, :key_words=>[]}
+      ]
+
+      expect(dates_from_string_with_ordinals.get_structure(input)).to eq(output)
+    end
+
+    it 'finds day with a specified "th" ordinal' do
+      dates_from_string_with_ordinals = DatesFromString.new(['between','-'], ordinals: ['th'])
+      input = '4th of Feb, 2015'
+      output = [
+        {:type=>:day, :value=>"4", :distance=>2, :key_words=>[]},
+        {:type=>:month, :value=>"02", :distance=>1, :key_words=>[]},
+        {:type=>:year, :value=>"2015", :distance=>0, :key_words=>[]}
+      ]
+
+      expect(dates_from_string_with_ordinals.get_structure(input)).to eq(output)
+    end
+
     it 'find dates in simple structure' do
       input = '23.04.2013'
       output = ['2013-04-23']
