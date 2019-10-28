@@ -27,8 +27,11 @@ Or install it yourself as:
 ```ruby
 text = "1988-1990 and 2000 and one more date 04.04.2015"        # parsing text
 key_words = ['between','-']                                     # you can define special separator
-date_format = {date_format: :usa}                               # year,day,month by default year,month,day
-dates_from_string = DatesFromString.new(key_words,date_format)  # define DatesFromString object
+options = {
+  date_format: :usa,                                            # year,day,month by default year,month,day
+  ordinals: ['nd', 'st', 'th']                                  # a string list that might accompany a day, default none
+}                               
+dates_from_string = DatesFromString.new(key_words, options)     # define DatesFromString object
 dates_from_string.get_structure(text)                           # parsing text
 
 #=> returns
@@ -128,6 +131,15 @@ obj.get_structure(input)
 #=> return
 # [{:type=>:year, :value=>"1960", :distance=>2, :key_words=>['and']},
 # {:type=>:year, :value=>"1965", :distance=>0, :key_words=>[]},]
+
+dates_from_string_with_ordinals = DatesFromString.new(['and'], ordinals: ['st', 'th', 'nd'])
+input = 'around September 2nd, 2013'
+dates_from_string_with_ordinals.get_structure(input)
+
+#=> return
+# [{:type=>:month, :value=>"09", :distance=>1, :key_words=>[]},
+# {:type=>:day, :value=>"2", :distance=>1, :key_words=>[]},
+# {:type=>:year, :value=>"2013", :distance=>0, :key_words=>[]}]
 
 input = "In September 2011, following a change in the law extending
          the presidential term from four years to six,[5] Putin announced

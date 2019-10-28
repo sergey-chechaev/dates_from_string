@@ -5,9 +5,10 @@ require 'dates_from_string/patterns'
 class DatesFromString
   include Patterns
 
-  def initialize(key_words = [], date_format: :default)
+  def initialize(key_words = [], date_format: :default, ordinals: [])
     @key_words = key_words
     @date_format = date_format_by_country(date_format)
+    @ordinals = Array(ordinals)
   end
 
   def find_date(string)
@@ -25,6 +26,17 @@ class DatesFromString
 
   def date_format_by_country(date_format)
     DATE_COUNTRY_FORMAT[date_format.to_sym].call
+  end
+
+  def day_regex
+    @day_regex ||= begin
+      if @ordinals.any?
+        ordinal_regex = "(#{@ordinals.join('|')})?"
+        /^\d{1,2}#{ordinal_regex},?$/
+      else
+        /^\d{1,2},?$/
+      end
+    end
   end
 
   def get_structure(string)
@@ -142,8 +154,8 @@ class DatesFromString
   end
 
   def get_day(string)
-    if string =~ (/^\d{2}$/)
-      string
+    if string =~ (day_regex)
+      string.gsub(Regexp.union(@ordinals + [',']), '')
     else
       nil
     end
@@ -162,7 +174,7 @@ class DatesFromString
 
   def get_month_by_list(string)
     month = ['January','February','March','April','May','June','July','August','September','October','November','December']
-    index = month.index(string)
+    index = month.index(string.chomp(','))
 
     if index
       sprintf('%02d',(index+1))
@@ -174,7 +186,7 @@ class DatesFromString
 
   def get_short_month(string)
     short_month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-    short_index = short_month.index(string)
+    short_index = short_month.index(string.chomp(','))
 
     if short_index
       sprintf('%02d',(short_index+1))
