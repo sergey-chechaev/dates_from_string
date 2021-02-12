@@ -32,6 +32,7 @@ module Patterns
 
   DATE_COUNTRY_FORMAT = {
     default: -> { [:year, :month, :day] },
+    bra: -> { [:day, :month, :year] },
     usa: -> { [:year, :day, :month] }
   }.freeze
 end
