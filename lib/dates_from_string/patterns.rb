@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Patterns
   PATTERNS = {
     [
@@ -21,18 +23,18 @@ module Patterns
       /\d{1}\.\d{2}\.\d{4}/
     ] => ->(string) { string.to_s.split('.').reverse },
     [
-      /\d{4}\/\d{2}\/\d{2}/,
-      /\d{4}\/\d{2}\/\d{1}/
+      %r{\d{4}/\d{2}/\d{2}},
+      %r{\d{4}/\d{2}/\d{1}}
     ] => ->(string) { string.to_s.split('/') },
     [
-      /\d{2}\/\d{2}\/\d{4}/,
-      /\d{1}\/\d{2}\/\d{4}/
+      %r{\d{2}/\d{2}/\d{4}},
+      %r{\d{1}/\d{2}/\d{4}}
     ] => ->(string) { string.to_s.split('/').reverse }
   }.freeze
 
   DATE_COUNTRY_FORMAT = {
-    default: -> { [:year, :month, :day] },
-    bra: -> { [:day, :month, :year] },
-    usa: -> { [:year, :day, :month] }
+    default: -> { %i[year month day] },
+    bra: -> { %i[day month year] },
+    usa: -> { %i[year day month] }
   }.freeze
 end

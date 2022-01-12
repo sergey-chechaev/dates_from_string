@@ -1,7 +1,8 @@
-require "dates_from_string/version"
+# frozen_string_literal: true
+
+require 'dates_from_string/version'
 
 class ParsingStructure
-
   def initialize(structure)
     @structure = structure
 
@@ -10,41 +11,29 @@ class ParsingStructure
 
   def start
     if @structure
-      if (@structure.select {|father| father[:type] == :time }).any?
+      if (@structure.select { |father| father[:type] == :time }).any?
         get_year_month_day_time
       else
         get_year_month_day
       end
     end
 
-    return @array_of_full_data
+    @array_of_full_data
   end
 
   def get_year_month_day_time
     set_year_month_day_time
 
-    if @structure
-      @structure.each do |item|
-        if item[:type] == :year
-          @year = item[:value]
-        end
+    @structure&.each do |item|
+      @year = item[:value] if item[:type] == :year
 
-        if item[:type] == :month
-          @month = item[:value]
-        end
+      @month = item[:value] if item[:type] == :month
 
-        if item[:type] == :day
-          @day = item[:value]
-        end
+      @day = item[:value] if item[:type] == :day
 
-        if item[:type] == :time
-          @time = item[:value]
-        end
+      @time = item[:value] if item[:type] == :time
 
-        if @year && @month && @day && @time
-          @array_of_full_data << [[@year,@month,@day].join("-"), @time].join(" ")
-        end
-      end
+      @array_of_full_data << [[@year, @month, @day].join('-'), @time].join(' ') if @year && @month && @day && @time
     end
 
     @array_of_full_data
@@ -53,24 +42,14 @@ class ParsingStructure
   def get_year_month_day
     set_year_month_day_time
 
-    if @structure
-      @structure.each do |item|
-        if item[:type] == :year
-          @year = item[:value]
-        end
+    @structure&.each do |item|
+      @year = item[:value] if item[:type] == :year
 
-        if item[:type] == :month
-          @month = item[:value]
-        end
+      @month = item[:value] if item[:type] == :month
 
-        if item[:type] == :day
-          @day = item[:value]
-        end
+      @day = item[:value] if item[:type] == :day
 
-        if @year && @month && @day
-          @array_of_full_data << [@year,@month,@day].join("-")
-        end
-      end
+      @array_of_full_data << [@year, @month, @day].join('-') if @year && @month && @day
     end
 
     @array_of_full_data
@@ -82,5 +61,4 @@ class ParsingStructure
     @day = nil
     @time = nil
   end
-
 end
