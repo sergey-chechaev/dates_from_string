@@ -62,32 +62,32 @@ class DatesFromString
       value_time = get_time(data)
 
       value_day = get_day(data)
-      next_index = index + 1
+      next_token = data_arr[index + 1]
 
-      add_to_structure(:year, value_year, index, next_index, data_arr) if value_year
+      add_to_structure(:year, value_year, index, next_token) if value_year
 
       if value_full_date
         index = 0 if @main_arr.empty?
-        add_to_structure(@date_format[0], value_full_date[0], index, next_index, data_arr)
-        add_to_structure(@date_format[1], value_full_date[1], index, next_index, data_arr)
-        add_to_structure(@date_format[2], value_full_date[2], index, next_index, data_arr)
+        add_to_structure(@date_format[0], value_full_date[0], index, next_token)
+        add_to_structure(@date_format[1], value_full_date[1], index, next_token)
+        add_to_structure(@date_format[2], value_full_date[2], index, next_token)
       end
 
       if value_month_year_date
-        add_to_structure(:year, value_month_year_date[0], index, next_index, data_arr)
-        add_to_structure(:month, value_month_year_date[1], index, next_index, data_arr)
+        add_to_structure(:year, value_month_year_date[0], index, next_token)
+        add_to_structure(:month, value_month_year_date[1], index, next_token)
       end
 
       if value_dash
-        add_to_structure(:year, value_dash[0], index, next_index, data_arr, '-')
-        add_to_structure(:year, value_dash[1], index, next_index, data_arr)
+        add_to_structure(:year, value_dash[0], index, next_token, '-')
+        add_to_structure(:year, value_dash[1], index, next_token)
       end
 
-      add_to_structure(:month, value_month, index, next_index, data_arr) if value_month
+      add_to_structure(:month, value_month, index, next_token) if value_month
 
-      add_to_structure(:day, value_day, index, next_index, data_arr) if value_day
+      add_to_structure(:day, value_day, index, next_token) if value_day
 
-      add_to_structure(:time, value_time, index, next_index, data_arr) if value_time
+      add_to_structure(:time, value_time, index, next_token) if value_time
     end
 
     @main_arr
@@ -151,7 +151,7 @@ class DatesFromString
     format('%02d', (index + 1)) if index
   end
 
-  def add_to_structure(type, value, index, next_index, data_arr, key_word = nil)
+  def add_to_structure(type, value, index, next_token, key_word = nil)
     @structura = { type: nil, value: nil, distance: 0, key_words: [] }
     if value
       @first_index << index
@@ -161,7 +161,7 @@ class DatesFromString
 
     @main_arr.last[:distance] = calc_index(index) if value && @main_arr.last
 
-    @structura[:key_words] << data_arr[next_index] if @key_words&.include?(data_arr[next_index])
+    @structura[:key_words] << next_token if @key_words&.include?(next_token)
 
     @structura[:key_words] << key_word if key_word
 
