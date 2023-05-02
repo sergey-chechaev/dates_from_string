@@ -2,7 +2,7 @@
 
 require 'dates_from_string/version'
 
-class ParsingStructure
+class DatetimeFormatter
   def initialize(structure)
     @structure = structure
 

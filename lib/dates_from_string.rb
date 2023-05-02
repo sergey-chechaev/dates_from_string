@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'dates_from_string/version'
-require 'dates_from_string/parsing_structure'
+require 'dates_from_string/datetime_formatter'
 require 'dates_from_string/patterns'
 
 class DatesFromString
@@ -14,7 +14,7 @@ class DatesFromString
   end
 
   def find_date(string)
-    parsing_structure = ParsingStructure.new(get_structure(string))
+    parsing_structure = DatetimeFormatter.new(get_structure(string))
     parsing_structure.start
   end
 
