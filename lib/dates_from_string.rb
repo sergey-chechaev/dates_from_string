@@ -159,7 +159,7 @@ class DatesFromString
   end
 
   def add_to_structure(type, value, index, next_index, data_arr, key_word = nil)
-    set_structura
+    @structura = { type: nil, value: nil, distance: 0, key_words: [] }
     if value
       @first_index << index
       @structura[:type] = type
@@ -187,9 +187,5 @@ class DatesFromString
     else
       index
     end
-  end
-
-  def set_structura
-    @structura = { type: nil, value: nil, distance: 0, key_words: [] }
   end
 end
