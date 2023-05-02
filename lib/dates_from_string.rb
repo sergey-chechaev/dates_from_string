@@ -55,8 +55,7 @@ class DatesFromString
       value_full_date = get_full_date(data)
       value_month_year_date = get_month_year_date(data)
       value_dash = get_dash_data(data)
-      value_month = get_month_by_list(data)
-      value_short_month = get_short_month(data)
+      value_month = get_month(data)
       value_time = get_time(data)
 
       value_day = get_day(data)
@@ -82,8 +81,6 @@ class DatesFromString
       end
 
       add_to_structure(:month, value_month, index, next_index, data_arr) if value_month
-
-      add_to_structure(:month, value_short_month, index, next_index, data_arr) if value_short_month
 
       add_to_structure(:day, value_day, index, next_index, data_arr) if value_day
 
@@ -144,18 +141,13 @@ class DatesFromString
     end
   end
 
-  def get_month_by_list(string)
+  def get_month(string)
     month = %w[January February March April May June July August September October November December]
-    index = month.index(string.chomp(','))
-
-    format('%02d', (index + 1)) if index
-  end
-
-  def get_short_month(string)
     short_month = %w[Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec]
-    short_index = short_month.index(string.chomp(','))
+    txt = string.chomp ','
 
-    format('%02d', (short_index + 1)) if short_index
+    index = month.index(txt) || short_month.index(txt)
+    format('%02d', (index + 1)) if index
   end
 
   def add_to_structure(type, value, index, next_index, data_arr, key_word = nil)
