@@ -5,26 +5,22 @@ require 'dates_from_string/version'
 class DatetimeFormatter
   def initialize(structure)
     @structure = structure
-
-    @array_of_full_data = []
   end
 
   def start
-    if @structure
-      if (@structure.select { |father| father[:type] == :time }).any?
-        get_year_month_day_time
-      else
-        get_year_month_day
-      end
-    end
+    return unless @structure
 
-    @array_of_full_data
+    if (@structure.select { |father| father[:type] == :time }).any?
+      get_year_month_day_time
+    else
+      get_year_month_day
+    end
   end
 
   def get_year_month_day_time
     set_year_month_day_time
 
-    @structure&.each do |item|
+    @structure&.filter_map do |item|
       @year = item[:value] if item[:type] == :year
 
       @month = item[:value] if item[:type] == :month
@@ -33,26 +29,22 @@ class DatetimeFormatter
 
       @time = item[:value] if item[:type] == :time
 
-      @array_of_full_data << [[@year, @month, @day].join('-'), @time].join(' ') if @year && @month && @day && @time
+      [[@year, @month, @day].join('-'), @time].join(' ') if @year && @month && @day && @time
     end
-
-    @array_of_full_data
   end
 
   def get_year_month_day
     set_year_month_day_time
 
-    @structure&.each do |item|
+    @structure&.filter_map do |item|
       @year = item[:value] if item[:type] == :year
 
       @month = item[:value] if item[:type] == :month
 
       @day = item[:value] if item[:type] == :day
 
-      @array_of_full_data << [@year, @month, @day].join('-') if @year && @month && @day
+      [@year, @month, @day].join('-') if @year && @month && @day
     end
-
-    @array_of_full_data
   end
 
   def set_year_month_day_time
