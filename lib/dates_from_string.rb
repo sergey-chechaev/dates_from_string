@@ -17,7 +17,7 @@ class DatesFromString
     parsed_structure = get_structure string
     return [] if parsed_structure.nil? || parsed_structure.empty?
 
-    DatetimeFormatter.new(parsed_structure).start
+    DatetimeFormatter.compile_dates parsed_structure
   end
 
   def get_clear_text
