@@ -7,6 +7,9 @@ require 'dates_from_string/patterns'
 class DatesFromString
   include Patterns
 
+  MONTHS = %w[January February March April May June July August September October November December].freeze
+  MONTHS_SHORT = %w[Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec].freeze
+
   def initialize(key_words = [], date_format: :default, ordinals: [])
     @key_words = key_words
     @date_format = date_format_by_country(date_format)
@@ -142,11 +145,9 @@ class DatesFromString
   end
 
   def get_month(string)
-    month = %w[January February March April May June July August September October November December]
-    short_month = %w[Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec]
     txt = string.chomp ','
 
-    index = month.index(txt) || short_month.index(txt)
+    index = MONTHS.index(txt) || MONTHS_SHORT.index(txt)
     format('%02d', (index + 1)) if index
   end
 
