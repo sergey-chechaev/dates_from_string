@@ -14,13 +14,12 @@ module DatetimeFormatter
   def self.get_year_month_day_time(structure)
     year = month = day = time = nil
     structure.filter_map do |item|
-      year = item[:value] if item[:type] == :year
-
-      month = item[:value] if item[:type] == :month
-
-      day = item[:value] if item[:type] == :day
-
-      time = item[:value] if item[:type] == :time
+      case item[:type]
+      when :year  then year = item[:value]
+      when :month then month = item[:value]
+      when :day   then day = item[:value]
+      when :time  then time = item[:value]
+      end
 
       [[year, month, day].join('-'), time].join(' ') if year && month && day && time
     end
@@ -29,9 +28,12 @@ module DatetimeFormatter
   def self.get_year_month_day(structure)
     year = month = day = nil
     structure.filter_map do |item|
-      year = item[:value] if item[:type] == :year
-      month = item[:value] if item[:type] == :month
-      day = item[:value] if item[:type] == :day
+      case item[:type]
+      when :year  then year = item[:value]
+      when :month then month = item[:value]
+      when :day then day = item[:value]
+      else next
+      end
 
       [year, month, day].join('-') if year && month && day
     end
