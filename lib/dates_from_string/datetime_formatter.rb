@@ -10,7 +10,7 @@ class DatetimeFormatter
   def start
     return unless @structure
 
-    if (@structure.select { |father| father[:type] == :time }).any?
+    if @structure.any? { |father| father[:type] == :time }
       get_year_month_day_time
     else
       get_year_month_day
