@@ -14,8 +14,10 @@ class DatesFromString
   end
 
   def find_date(string)
-    parsing_structure = DatetimeFormatter.new(get_structure(string))
-    parsing_structure.start
+    parsed_structure = get_structure string
+    return [] if parsed_structure.nil? || parsed_structure.empty?
+
+    DatetimeFormatter.new(parsed_structure).start
   end
 
   def get_clear_text
