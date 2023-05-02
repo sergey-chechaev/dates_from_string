@@ -18,39 +18,28 @@ class DatetimeFormatter
   end
 
   def get_year_month_day_time
-    set_year_month_day_time
-
+    year = month = day = time = nil
     @structure&.filter_map do |item|
-      @year = item[:value] if item[:type] == :year
+      year = item[:value] if item[:type] == :year
 
-      @month = item[:value] if item[:type] == :month
+      month = item[:value] if item[:type] == :month
 
-      @day = item[:value] if item[:type] == :day
+      day = item[:value] if item[:type] == :day
 
-      @time = item[:value] if item[:type] == :time
+      time = item[:value] if item[:type] == :time
 
-      [[@year, @month, @day].join('-'), @time].join(' ') if @year && @month && @day && @time
+      [[year, month, day].join('-'), time].join(' ') if year && month && day && time
     end
   end
 
   def get_year_month_day
-    set_year_month_day_time
-
+    year = month = day = nil
     @structure&.filter_map do |item|
-      @year = item[:value] if item[:type] == :year
+      year = item[:value] if item[:type] == :year
+      month = item[:value] if item[:type] == :month
+      day = item[:value] if item[:type] == :day
 
-      @month = item[:value] if item[:type] == :month
-
-      @day = item[:value] if item[:type] == :day
-
-      [@year, @month, @day].join('-') if @year && @month && @day
+      [year, month, day].join('-') if year && month && day
     end
-  end
-
-  def set_year_month_day_time
-    @year = nil
-    @month = nil
-    @day = nil
-    @time = nil
   end
 end
