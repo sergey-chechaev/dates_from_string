@@ -40,55 +40,55 @@ class DatesFromString
   end
 
   def get_structure(string)
-    unless string.nil? || string.empty?
-      @main_arr = []
-      data_arr = string.split
-      @indexs = []
-      @first_index = []
-      @clear_text = string.clone
+    return if string.nil? || string.empty?
 
-      data_arr.each_with_index do |data, index|
-        value_year = get_year(data)
-        value_full_date = get_full_date(data)
-        value_month_year_date = get_month_year_date(data)
-        value_dash = get_dash_data(data)
-        value_month = get_month_by_list(data)
-        value_short_month = get_short_month(data)
-        value_time = get_time(data)
+    @main_arr = []
+    data_arr = string.split
+    @indexs = []
+    @first_index = []
+    @clear_text = string.clone
 
-        value_day = get_day(data)
-        next_index = index + 1
+    data_arr.each_with_index do |data, index|
+      value_year = get_year(data)
+      value_full_date = get_full_date(data)
+      value_month_year_date = get_month_year_date(data)
+      value_dash = get_dash_data(data)
+      value_month = get_month_by_list(data)
+      value_short_month = get_short_month(data)
+      value_time = get_time(data)
 
-        add_to_structure(:year, value_year, index, next_index, data_arr) if value_year
+      value_day = get_day(data)
+      next_index = index + 1
 
-        if value_full_date
-          index = 0 if @main_arr.size.zero?
-          add_to_structure(@date_format[0], value_full_date[0], index, next_index, data_arr)
-          add_to_structure(@date_format[1], value_full_date[1], index, next_index, data_arr)
-          add_to_structure(@date_format[2], value_full_date[2], index, next_index, data_arr)
-        end
+      add_to_structure(:year, value_year, index, next_index, data_arr) if value_year
 
-        if value_month_year_date
-          add_to_structure(:year, value_month_year_date[0], index, next_index, data_arr)
-          add_to_structure(:month, value_month_year_date[1], index, next_index, data_arr)
-        end
-
-        if value_dash
-          add_to_structure(:year, value_dash[0], index, next_index, data_arr, '-')
-          add_to_structure(:year, value_dash[1], index, next_index, data_arr)
-        end
-
-        add_to_structure(:month, value_month, index, next_index, data_arr) if value_month
-
-        add_to_structure(:month, value_short_month, index, next_index, data_arr) if value_short_month
-
-        add_to_structure(:day, value_day, index, next_index, data_arr) if value_day
-
-        add_to_structure(:time, value_time, index, next_index, data_arr) if value_time
+      if value_full_date
+        index = 0 if @main_arr.empty?
+        add_to_structure(@date_format[0], value_full_date[0], index, next_index, data_arr)
+        add_to_structure(@date_format[1], value_full_date[1], index, next_index, data_arr)
+        add_to_structure(@date_format[2], value_full_date[2], index, next_index, data_arr)
       end
 
-      @main_arr
+      if value_month_year_date
+        add_to_structure(:year, value_month_year_date[0], index, next_index, data_arr)
+        add_to_structure(:month, value_month_year_date[1], index, next_index, data_arr)
+      end
+
+      if value_dash
+        add_to_structure(:year, value_dash[0], index, next_index, data_arr, '-')
+        add_to_structure(:year, value_dash[1], index, next_index, data_arr)
+      end
+
+      add_to_structure(:month, value_month, index, next_index, data_arr) if value_month
+
+      add_to_structure(:month, value_short_month, index, next_index, data_arr) if value_short_month
+
+      add_to_structure(:day, value_day, index, next_index, data_arr) if value_day
+
+      add_to_structure(:time, value_time, index, next_index, data_arr) if value_time
     end
+
+    @main_arr
   end
 
   def get_time(string)
@@ -134,7 +134,7 @@ class DatesFromString
   end
 
   def get_day(string)
-    string.gsub(Regexp.union(@ordinals + [',']), '') if string =~ (day_regex)
+    string.gsub(Regexp.union(@ordinals + [',']), '') if string&.match?(day_regex)
   end
 
   def get_dash_data(string)
@@ -173,22 +173,21 @@ class DatesFromString
 
     @structura[:key_words] << key_word if key_word
 
-    if value
-      @main_arr << @structura
-      value = nil
-    end
+    return unless value
+
+    @main_arr << @structura
+    nil
   end
 
   def calc_index(index)
-    result = nil
     @indexs << index
-    result = if @indexs.count > 1
-               (index - @indexs[-2])
-             elsif @first_index[0] < index
-               (index - @first_index[0])
-             else
-               index
-             end
+    if @indexs.count > 1
+      (index - @indexs[-2])
+    elsif @first_index[0] < index
+      (index - @first_index[0])
+    else
+      index
+    end
   end
 
   def set_structura

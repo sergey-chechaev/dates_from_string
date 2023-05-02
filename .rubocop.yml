@@ -1,5 +1,10 @@
+require:
+  - rubocop-thread_safety
+  - rubocop-performance
+
 AllCops:
   NewCops: enable
+  AllowSymlinksInCacheRootDirectory: true
 
 Layout/LineLength:
   Max: 140
@@ -7,11 +12,36 @@ Layout/LineLength:
     - 'spec/**/*'
 
 Metrics/MethodLength:
-  Max: 12
+  Max: 26
 
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Max: 19
+
+Metrics/CyclomaticComplexity:
+  Max: 19
+
+Metrics/AbcSize:
+  Max: 61
+
 Style/Documentation:
   Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - 'spec/**/*'
