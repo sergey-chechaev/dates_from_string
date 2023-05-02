@@ -94,13 +94,10 @@ class DatesFromString
   end
 
   def get_time(string)
-    if (result = string.match(/\d{2}:\d{2}:\d{2}/))
-      @clear_text.slice!(result.to_s)
-      result.to_s
-    elsif (result = string.match(/\d{2}:\d{2}/))
-      @clear_text.slice!(result.to_s)
-      result.to_s
-    end
+    return unless (result = string.match(/\d{2}:\d{2}:\d{2}/) || string.match(/\d{2}:\d{2}/))
+
+    @clear_text.slice!(result.to_s)
+    result.to_s
   end
 
   def get_year(string)
